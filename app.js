@@ -13,7 +13,7 @@ const summaryDisplay = document.getElementById('summary');
 function updateTimer() {
   const minutes = Math.floor(timeRemaining / 60);
   const seconds = timeRemaining % 60;
-  timerDisplay.textContent = \`\${minutes}:\${seconds.toString().padStart(2, '0')}\`;
+  timerDisplay.textContent = minutes + ':' + seconds.toString().padStart(2, '0');
 }
 
 function countdown() {
