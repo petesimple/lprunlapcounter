@@ -22,26 +22,26 @@ function countdown() {
     updateTimer();
   } else {
     clearInterval(timer);
-    summaryDisplay.innerHTML = \`<strong>Race Finished!</strong><br>You ran <strong>\${lapCount}</strong> laps (~\${(lapCount * 0.4).toFixed(2)} km)\`;
+    summaryDisplay.innerHTML = '<strong>Race Finished!</strong><br>You ran <strong>' + lapCount + '</strong> laps (~' + (lapCount * 0.4).toFixed(2) + ' km)';
   }
 }
 
-startButton.addEventListener('click', () => {
+startButton.addEventListener('click', function() {
   if (timer) return;
   timer = setInterval(countdown, 1000);
 });
 
-addLapButton.addEventListener('click', () => {
+addLapButton.addEventListener('click', function() {
   lapCount++;
   lapDisplay.textContent = lapCount;
 });
 
-subtractLapButton.addEventListener('click', () => {
+subtractLapButton.addEventListener('click', function() {
   if (lapCount > 0) lapCount--;
   lapDisplay.textContent = lapCount;
 });
 
-resetLapButton.addEventListener('click', () => {
+resetLapButton.addEventListener('click', function() {
   lapCount = 0;
   lapDisplay.textContent = lapCount;
 });
