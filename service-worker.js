@@ -2,11 +2,11 @@ self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open('lp-run-cache').then((cache) => {
       return cache.addAll([
-        '/',
-        '/index.html',
-        '/styles.css',
-        '/app.js',
-        '/manifest.json'
+        '/lprunlapcounter/',
+        '/lprunlapcounter/index.html',
+        '/lprunlapcounter/styles.css',
+        '/lprunlapcounter/app.js',
+        '/lprunlapcounter/manifest.json'
       ]);
     })
   );
