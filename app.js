@@ -1,15 +1,17 @@
 let timer;
 let timeRemaining = 33 * 60 + 20; // seconds
 let lapCount = 0;
-let laps = []; // Store lap timestamps
+let laps = [];
 
 const timerDisplay = document.getElementById('timer');
 const startButton = document.getElementById('startButton');
 const addLapButton = document.getElementById('addLap');
 const subtractLapButton = document.getElementById('subtractLap');
-const resetLapButton = document.getElementById('resetLap');
 const lapDisplay = document.getElementById('lapCount');
 const summaryDisplay = document.getElementById('summary');
+
+// Setup audio
+const airhorn = new Audio('airhorn.mp3');
 
 function updateTimer() {
   const minutes = Math.floor(timeRemaining / 60);
@@ -23,7 +25,7 @@ function countdown() {
     updateTimer();
   } else {
     clearInterval(timer);
-    summaryDisplay.innerHTML += '<br><strong>Race Finished!</strong>';
+    finishRace();
   }
 }
 
@@ -37,6 +39,39 @@ function recordLap() {
 
 function updateLapLog() {
   summaryDisplay.innerHTML = laps.join('<br>');
+}
+
+function finishRace() {
+  summaryDisplay.innerHTML += '<br><strong>Race Finished!</strong>';
+  launchConfetti();
+  airhorn.play();
+}
+
+function launchConfetti() {
+  // Tiny confetti effect using basic emojis
+  const duration = 3 * 1000;
+  const end = Date.now() + duration;
+
+  (function frame() {
+    // Create a confetti emoji element
+    const emoji = document.createElement('div');
+    emoji.textContent = '🎉';
+    emoji.style.position = 'fixed';
+    emoji.style.top = Math.random() * 100 + 'vh';
+    emoji.style.left = Math.random() * 100 + 'vw';
+    emoji.style.fontSize = '2rem';
+    emoji.style.opacity = '0.8';
+    document.body.appendChild(emoji);
+
+    // Remove after 1 sec
+    setTimeout(() => {
+      emoji.remove();
+    }, 1000);
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
 }
 
 startButton.addEventListener('click', function() {
@@ -57,13 +92,6 @@ subtractLapButton.addEventListener('click', function() {
     laps.pop(); // Remove last recorded lap
     updateLapLog();
   }
-});
-
-resetLapButton.addEventListener('click', function() {
-  lapCount = 0;
-  laps = [];
-  lapDisplay.textContent = lapCount;
-  updateLapLog();
 });
 
 updateTimer();
